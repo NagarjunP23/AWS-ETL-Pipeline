@@ -11,19 +11,19 @@ It listens to **S3 events**, processes raw **nested JSON order data**, transform
 
 ---
 
-## 🚀 Architecture (GitHub-safe)
+## 🚀 Architecture
 
-Simple flow (text):
+Simple flow:
 S3 (raw JSON upload)
-↓
+-> 
 Lambda function (reads JSON, flattens)
-↓
+-> 
 Convert to Parquet (Pandas + PyArrow)
-↓
-Write Parquet to S3 (orders_parquet_datalake/)
-↓
+-> 
+Write Parquet to S3 (orders_datalake/)
+-> 
 Trigger Glue Crawler (etl_pipeline_crawler)
-↓
+-> 
 Query via Athena
 
 
@@ -36,7 +36,7 @@ Query via Athena
    - Flatten nested JSON (`customer` + `products`).  
    - Convert data into a Pandas DataFrame.  
    - Save as Parquet (optimized columnar storage).  
-3. **Load** → Write processed file back to S3 in `orders_parquet_datalake/`.  
+3. **Load** → Write processed file back to S3 in `orders_datalake/`.  
 4. **Catalog** → Trigger Glue Crawler (`etl_pipeline_crawler`) to update schema.  
 5. **Query** → Use Amazon Athena to run SQL queries on fresh data.
 
@@ -44,6 +44,7 @@ Query via Athena
 
 ## 📂 Repo Structure
 ├── lambda_function.py # Lambda handler with logging & error handling
+
 └── README.md # Documentation
 
 
